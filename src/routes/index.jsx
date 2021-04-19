@@ -13,11 +13,11 @@ export const Routes = () => (
   <Router>
     <Switch>
       <Layout>
-        <Suspense fallback={<LoadingFallback/>}>
-          <Route path="/" component={MainPage} exact/>
-          <Route path="/lobbies" component={LobbiesPage} exact/>
-          <Route path="/lobbies/:lobbyId" component={LobbyPage}/>
-          <Route path="/help" component={HelpPage}/>
+        <Suspense fallback={<LoadingFallback />}>
+          <Route path="/" component={MainPage} exact />
+          <Route path="/lobbies" component={LobbiesPage} exact />
+          <Route path="/lobbies/:lobbyId" component={LobbyPage} />
+          <Route path="/help" component={HelpPage} />
         </Suspense>
       </Layout>
     </Switch>

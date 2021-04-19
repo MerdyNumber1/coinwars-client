@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 export const LoginForm = () => {
+  const history = useHistory();
   const [name, setName] = useState()
   const [error, setError] = useState()
 
@@ -9,7 +11,7 @@ export const LoginForm = () => {
     e.preventDefault()
 
     if (name && name.length > 3 && name.length < 30) {
-      setError('');
+      history.push('/lobbies')
     } else {
       setError('Enter your name correctly')
     }
