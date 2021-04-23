@@ -1,8 +1,11 @@
+import { nanoid } from 'nanoid'
 import { userSlice } from './index';
 
-const { setName } = userSlice.actions
+const { setUserInfo } = userSlice.actions
 
-export const saveName = (name) => (dispatch) => {
-  window.localStorage.setItem('name', name)
-  dispatch(setName(name))
+export const saveUser = ({ name }) => (dispatch) => {
+  const userInfo = { name, id: nanoid(8) }
+
+  window.localStorage.setItem('user', JSON.stringify(userInfo))
+  dispatch(setUserInfo(userInfo))
 }

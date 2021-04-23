@@ -4,12 +4,13 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     userInfo: {
+      id: null,
       name: null,
     }
   },
   reducers: {
-    setName(state, payload) {
-      state.userInfo.name = payload
+    setUserInfo(state, payload) {
+      state.userInfo = payload
     }
   },
 })
