@@ -5,6 +5,7 @@ import { Nav } from 'components/Nav'
 const LayoutWrapper = styled(Container)`
   width: 100%;
   height: 100vh;
+  margin-top: 66px;
 `;
 
 export const Layout = ({ children }) => (

@@ -1,23 +1,27 @@
 import { useEffect } from 'react';
 import { Card, ListGroup } from 'react-bootstrap';
 import { useLobbies } from 'hooks/useLobbies';
+import styled from 'styled-components';
+import { LobbyCard } from './LobbyCard';
 
 export const LobbiesCard = () => {
-  const { selectLobbies, getLobbies } = useLobbies()
+  const { lobbies, getLobbies } = useLobbies()
 
   useEffect(() => {
     getLobbies()
   }, [])
 
-  const lobbies = selectLobbies()
-
   return (
-    <Card style={{width: '18rem'}}>
+    <CardWrapper>
       <ListGroup variant="flush">
         {lobbies.map(lobby => (
-          <ListGroup.Item key={lobby.id}>{lobby.name}</ListGroup.Item>
+          <LobbyCard key={lobby.id} lobby={lobby} />
         ))}
       </ListGroup>
-    </Card>
+    </CardWrapper>
   )
 }
+
+const CardWrapper = styled(Card)`
+  width: 100%;
+`;

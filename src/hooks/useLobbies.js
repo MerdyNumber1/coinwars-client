@@ -7,7 +7,7 @@ export const useLobbies = () => {
 
   return {
     getLobbies: () => dispatch(getLobbies()),
-    selectLobbies: () => useSelector(lobbiesSelectors.selectAll)
+    lobbies: useSelector(lobbiesSelectors.selectAll)
   }
 }
 
