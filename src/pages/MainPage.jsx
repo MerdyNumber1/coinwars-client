@@ -21,6 +21,5 @@ const MainPageWrapper = styled.main`
 `;
 
 const LoginFormWrapper = styled.section`
-  max-width: 400px;
   width: 100%;
 `;

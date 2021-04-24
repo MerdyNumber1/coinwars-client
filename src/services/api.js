@@ -10,3 +10,4 @@ export const axios = axiosClient.create({
 });
 
 export const fetchLobbies = () => axios.get('lobbies').then(res => res.data)
+export const fetchLobbyById = (id) => axios.get(`lobbies/${id}`).then(res => res.data)

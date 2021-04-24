@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
 
 export const LoginForm = () => {
-  const { saveUser } = useUser()
+  const { saveUser, userInfo } = useUser()
   const history = useHistory();
-  const [name, setName] = useState()
+  const [name, setName] = useState(userInfo.name || null)
   const [error, setError] = useState()
 
   const onSubmit = (e) => {
@@ -25,7 +25,11 @@ export const LoginForm = () => {
       {error && <Alert variant="danger" dismissible>{error}</Alert>}
       <Form.Group>
         <Form.Label>Your name:</Form.Label>
-        <Form.Control placeholder="Enter your name" onChange={(e) => setName(e.target.value)}/>
+        <Form.Control
+          placeholder="Enter your name"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+        />
       </Form.Group>
       <Button type="submit" block>Enter the lobby</Button>
     </Form>

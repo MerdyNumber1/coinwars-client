@@ -1,11 +1,14 @@
 import { useMemo } from 'react';
 import { io } from 'socket.io-client';
 
-export const useSocket = (url = process.env.REACT_APP_SOCKET_URL, query) => {
-  const socket = useMemo(() => io(url, {
+export const useSocket = (namespace, query) => {
+  const socket = useMemo(() => io(`${process.env.REACT_APP_SOCKET_URL}/${namespace}`, {
+    path: '/ws/socket.io/',
     reconnectionDelayMax: 10000,
     query
   }), []);
+
+  console.log(socket)
 
   return {
     socket,
