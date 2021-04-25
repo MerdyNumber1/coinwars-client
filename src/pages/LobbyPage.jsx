@@ -5,14 +5,17 @@ import { useParams } from 'react-router-dom';
 import { LoadingFallback } from 'components/LoadingFallback';
 import { PlayerCard } from 'components/cards/PlayerCard';
 import { useSocket } from 'hooks/useSocket';
+import { useUser } from 'hooks/useUser';
 
 export const LobbyPage = () => {
+  const { userInfo } = useUser()
   const { lobbyId } = useParams()
-  const { onEvent } = useSocket(`${process.env.REACT_APP_SOCKET_URL}/lobbies/${lobbyId}`)
+  const { onEvent } = useSocket('lobbies', {
+    lobbyId,
+    user: JSON.stringify(userInfo)
+  })
   const { selectLobbyById, getLobbyById, addPlayerToLobby } = useLobbies()
   const lobby = selectLobbyById(lobbyId)
-
-  console.log(`${process.env.REACT_APP_SOCKET_URL}/lobbies`)
 
   useEffect(() => {
     if (!lobby) {

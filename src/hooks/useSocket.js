@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 
 export const useSocket = (namespace, query) => {
   const socket = useMemo(() => io(`${process.env.REACT_APP_SOCKET_URL}/${namespace}`, {
-    path: '/ws/socket.io/',
+    transports: ['websocket', 'polling', 'flashsocket'],
     reconnectionDelayMax: 10000,
     query
   }), []);
