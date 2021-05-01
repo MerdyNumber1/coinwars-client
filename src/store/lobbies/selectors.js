@@ -1,5 +1,5 @@
 import { lobbiesAdapter } from './index';
 
 export const lobbiesSelectors = lobbiesAdapter.getSelectors(
-  (state) => state.lobby
+  (state) => state.lobbies
 )

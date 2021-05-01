@@ -8,8 +8,6 @@ export const useSocket = (namespace, query) => {
     query
   }), []);
 
-  console.log(socket)
-
   return {
     socket,
     onConnect: (cb) => socket.on('connect', cb),

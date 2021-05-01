@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { userSlice } from 'store/user';
-import { lobbySlice } from 'store/lobby';
+import { lobbySlice } from 'store/lobbies';
+import { playersSlice } from './players';
 
 const reducers = combineReducers({
   user: userSlice.reducer,
-  lobby: lobbySlice.reducer,
+  lobbies: lobbySlice.reducer,
+  players: playersSlice.reducer
 })
 
 export const store = configureStore({
