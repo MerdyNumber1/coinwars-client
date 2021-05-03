@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { LobbyCard } from './LobbyCard';
 
 export const LobbiesCard = () => {
-  const { lobbies, getLobbies } = useLobbies()
+  const { selectLobbies, getLobbies } = useLobbies()
+  const lobbies = selectLobbies()
 
   useEffect(() => {
     getLobbies()

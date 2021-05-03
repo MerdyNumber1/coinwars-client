@@ -28,7 +28,7 @@ export const LoginForm = () => {
         <Form.Control
           placeholder="Enter your name"
           onChange={(e) => setName(e.target.value)}
-          value={name}
+          value={name || ''}
         />
       </Form.Group>
       <Button type="submit" block>Enter the lobby</Button>

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const userInfo = JSON.parse(window.localStorage.getItem('user'))
+const userInfo = JSON.parse(window.localStorage.getItem('user')) || {}
 
 export const userSlice = createSlice({
   name: 'user',
@@ -11,7 +11,7 @@ export const userSlice = createSlice({
     }
   },
   reducers: {
-    setUserInfo(state, payload) {
+    setUserInfo(state, { payload }) {
       state.userInfo = payload
     }
   },

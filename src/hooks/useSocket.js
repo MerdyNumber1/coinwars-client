@@ -13,6 +13,7 @@ export const useSocket = (namespace, query) => {
     onConnect: (cb) => socket.on('connect', cb),
     onDisconnect: (cb) => socket.on('disconnect', cb),
     onEvent: (eventName, cb) => socket.on(eventName, cb),
-    emitEvent: (eventName, ...args) => socket.emit(eventName, ...args)
+    emitEvent: (eventName, ...args) => socket.emit(eventName, ...args),
+    disconnect: () => socket.disconnect()
   }
 }

@@ -2,7 +2,7 @@ import { lobbySlice } from './index';
 import { playersSlice } from 'store/players';
 import { fetchLobbies, fetchLobbyById } from 'services/api';
 
-const { addPlayers } = playersSlice.actions
+const { addPlayers, removePlayersFromLobby, setPlayers } = playersSlice.actions
 const { setLobbies, addLobby } = lobbySlice.actions
 
 export const getLobbies = () => (dispatch) => fetchLobbies().then((data) => {
@@ -10,17 +10,16 @@ export const getLobbies = () => (dispatch) => fetchLobbies().then((data) => {
 
   const lobbies = data.lobbies.map(lobby => {
     const { players: lobbyPlayers, ...lobbyData } = lobby
-    players.push(lobbyPlayers)
+    players.push(...lobbyPlayers)
     return lobbyData
   })
 
-  console.log(players)
-
   dispatch(setLobbies(lobbies))
-  dispatch(addPlayers(players))
+  dispatch(setPlayers(players))
 })
 export const getLobbyById = (id) => (dispatch) => fetchLobbyById(id).then((data) => {
   const { players, ...lobby } = data
   dispatch(addLobby(lobby))
+  dispatch(removePlayersFromLobby(lobby.id))
   dispatch(addPlayers(players))
 })

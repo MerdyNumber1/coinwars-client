@@ -9,7 +9,7 @@ export const useLobbies = () => {
     getLobbies: () => dispatch(getLobbies()),
     getLobbyById: (id) => dispatch(getLobbyById(id)),
     selectLobbyById: (id) => useSelector((state) => lobbiesSelectors.selectById(state, id)),
-    lobbies: useSelector(lobbiesSelectors.selectAll),
+    selectLobbies: () => useSelector(lobbiesSelectors.selectAll),
   }
 }
 
