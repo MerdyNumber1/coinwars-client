@@ -10,13 +10,19 @@ export const playersSlice = createSlice({
     addPlayer: playersAdapter.addOne,
     setPlayers: playersAdapter.setAll,
     removePlayer: playersAdapter.removeOne,
-    removePlayersFromLobby(state, { payload }) {
-      state.entities = Object.values(state.entities).reduce((prev, current) => {
-        if (current.lobby_id !== payload.lobbyId) {
-          return prev[current.id] = current
+    removePlayerByConnectionId(state, { payload }) {
+      Object.values(state.entities).forEach((entity) => {
+        if (entity.connection_id === payload.connectionId) {
+          playersAdapter.removeOne(state, entity.id)
         }
-        return prev
-      }, {})
+      })
+    },
+    removePlayersFromLobby(state, { payload }) {
+      Object.values(state.entities).forEach((entity) => {
+        if (entity.lobby_id === payload.lobbyId) {
+          playersAdapter.removeOne(state, entity.id)
+        }
+      })
     }
   },
 })

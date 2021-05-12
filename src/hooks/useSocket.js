@@ -10,9 +10,9 @@ export const useSocket = (namespace, query) => {
 
   return {
     socket,
-    onConnect: (cb) => socket.on('connect', cb),
-    onDisconnect: (cb) => socket.on('disconnect', cb),
-    onEvent: (eventName, cb) => socket.on(eventName, cb),
+    onConnect: (cb) => useMemo(() => socket.on('connect', cb), []),
+    onDisconnect: (cb) => useMemo(() => socket.on('disconnect', cb), []),
+    onEvent: (eventName, cb) => useMemo(() => socket.on(eventName, cb), []),
     emitEvent: (eventName, ...args) => socket.emit(eventName, ...args),
     disconnect: () => socket.disconnect()
   }
