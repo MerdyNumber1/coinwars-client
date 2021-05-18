@@ -4,16 +4,22 @@ import { useHistory } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
 
 export const LoginForm = () => {
-  const { saveUser, userInfo } = useUser()
+  const { saveUser, userInfo, isLogged, updateUser } = useUser()
   const history = useHistory();
   const [name, setName] = useState(userInfo.name || null)
   const [error, setError] = useState()
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     if (name && name.length > 3 && name.length < 30) {
-      saveUser(name)
+
+      if (isLogged && userInfo.name !== name) { // if user already has name and registered
+        await updateUser({ name })
+      } else { // if its a new user
+        await saveUser(name)
+      }
+
       history.push('/lobbies')
     } else {
       setError('Enter your name correctly')
