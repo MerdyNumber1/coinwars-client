@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid'
 import { userSlice } from './index'
-import { postUser, patchUser } from 'services/api'
+import { postUser, patchUser, fetchCurrentUser } from 'services/api'
+import { history } from 'routes'
 
 const { setUserInfo, setUserAuth, resetUserState } = userSlice.actions
 
@@ -9,7 +10,6 @@ export const saveUser = ({ name }) => async (dispatch) => {
 
   const userData = await postUser(userInfo)
 
-  window.localStorage.setItem('user', JSON.stringify(userData))
   window.localStorage.setItem('token', userInfo.token)
   dispatch(setUserInfo(userData))
   dispatch(setUserAuth({ token: userInfo.token }))
@@ -21,7 +21,11 @@ export const updateUser = (userData) => async (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
-  window.localStorage.removeItem('user')
   window.localStorage.removeItem('token')
   dispatch(resetUserState())
+  history.push('/')
 }
+
+export const getCurrentUser = () => (dispatch) => (
+  fetchCurrentUser().then(user => dispatch(setUserInfo(user)))
+)

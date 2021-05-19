@@ -1,20 +1,23 @@
-import { Suspense } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { lazyImport } from 'utils/lazyNamedImport';
-import { LoadingFallback } from 'components/LoadingFallback';
-import { Layout } from 'layout';
-import { useUser } from 'hooks/useUser';
+import { Suspense } from 'react'
+import { Router, Route, Switch } from 'react-router-dom'
+import { lazyImport } from 'utils/lazyNamedImport'
+import { LoadingFallback } from 'components/LoadingFallback'
+import { Layout } from 'layout'
+import { useUser } from 'hooks/useUser'
+import { createBrowserHistory } from 'history'
 
 const MainPage = lazyImport(() => import('pages/MainPage'), 'MainPage')
 const LobbiesPage = lazyImport(() => import('pages/LobbiesPage'), 'LobbiesPage')
 const LobbyPage = lazyImport(() => import('pages/LobbyPage'), 'LobbyPage')
 const HelpPage = lazyImport(() => import('pages/HelpPage'), 'HelpPage')
 
+export const history = createBrowserHistory()
+
 export const Routes = () => {
   const { isLogged } = useUser()
 
   return (
-    <Router>
+    <Router history={history}>
       <Switch>
         <Layout>
           <Suspense fallback={<LoadingFallback/>}>

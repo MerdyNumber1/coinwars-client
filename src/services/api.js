@@ -14,14 +14,15 @@ export const axios = axiosClient.create({
   },
 });
 
+
 axios.interceptors.response.use(
   (response) => Promise.resolve(response),
   async (error) => {
-    if (error.response.status === 401) {
+    if (error.response && error.response.status === 401) {
       dispatch(logout());
     }
 
-    throw new Error(error);
+    return Promise.reject(error)
   }
 );
 
@@ -37,8 +38,11 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+
 export const fetchLobbies = () => axios.get('lobbies?not_started=true').then(res => res.data)
 export const fetchLobbyById = (id) => axios.get(`lobbies/${id}`).then(res => res.data)
 
 export const postUser = (userData) => axios.post('players', userData).then(res => res.data)
 export const patchUser = (userData) => axios.patch('players/me', userData).then(res => res.data)
+
+export const fetchCurrentUser = () => axios.get('players/me').then(res => res.data)

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState} from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useUser } from 'hooks/useUser';
@@ -8,6 +8,8 @@ export const LoginForm = () => {
   const history = useHistory();
   const [name, setName] = useState(userInfo.name || null)
   const [error, setError] = useState()
+
+  useEffect(() => setName(userInfo.name), [userInfo])
 
   const onSubmit = async (e) => {
     e.preventDefault()
