@@ -1,13 +1,15 @@
-import { combineReducers } from 'redux';
-import { configureStore } from '@reduxjs/toolkit';
-import { userSlice } from 'store/user';
-import { lobbySlice } from 'store/lobbies';
-import { playersSlice } from './players';
+import { combineReducers } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
+import { profileSlice } from 'store/profile'
+import { lobbySlice } from 'store/lobbies'
+import { playersSlice } from 'store/players'
+import { usersSlice } from 'store/users'
 
 const reducers = combineReducers({
-  user: userSlice.reducer,
+  profile: profileSlice.reducer,
   lobbies: lobbySlice.reducer,
-  players: playersSlice.reducer
+  players: playersSlice.reducer,
+  users: usersSlice.reducer
 })
 
 export const store = configureStore({

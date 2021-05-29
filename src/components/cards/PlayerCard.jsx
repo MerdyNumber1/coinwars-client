@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const PlayerCard = ({ player }) => (
   <PlayerCardWrapper>
-    <span>{player.name}</span>
+    <span>{player.user.name}</span>
   </PlayerCardWrapper>
 )
 

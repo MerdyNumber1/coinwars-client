@@ -3,11 +3,17 @@ import { LobbiesCard } from 'components/cards/LobbiesCard';
 import styled from 'styled-components';
 import { RefreshButton } from 'components/RefreshButton';
 import { useLobbies } from 'hooks/useLobbies';
+import { useEffect } from 'react';
 
 export const LobbiesPage = () => {
-  const { getLobbies } = useLobbies()
+  const { selectLobbies, getLobbies } = useLobbies()
+  const lobbies = selectLobbies()
 
   const onLobbiesRefresh = () => getLobbies()
+
+  useEffect(() => {
+    getLobbies()
+  }, [])
 
   return (
     <>
@@ -18,7 +24,7 @@ export const LobbiesPage = () => {
         <RefreshWrapper>
           <RefreshButton onClick={onLobbiesRefresh} />
         </RefreshWrapper>
-        <LobbiesCard />
+        <LobbiesCard lobbies={lobbies} />
       </LobbiesWrapper>
     </>
   )

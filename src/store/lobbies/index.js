@@ -1,4 +1,5 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
+import { getLobbies, getLobbyById } from './actions'
 
 export const lobbiesAdapter = createEntityAdapter()
 
@@ -10,4 +11,12 @@ export const lobbySlice = createSlice({
     addLobbies: lobbiesAdapter.addMany,
     addLobby: lobbiesAdapter.addOne,
   },
+  extraReducers: {
+    [getLobbies.fulfilled]: (state, action) => {
+      lobbiesAdapter.upsertMany(state, action.payload.lobbies || {})
+    },
+    [getLobbyById.fulfilled]: (state, action) => {
+      lobbiesAdapter.upsertMany(state, action.payload.lobbies || {})
+    }
+  }
 })

@@ -1,25 +1,12 @@
-import { lobbySlice } from './index';
-import { playersSlice } from 'store/players';
-import { fetchLobbies, fetchLobbyById } from 'services/api';
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { fetchLobbies, fetchLobbyById } from 'services/api'
+import { normalize } from 'normalizr'
+import { lobbySchema } from './schema'
 
-const { addPlayers, removePlayersFromLobby, setPlayers } = playersSlice.actions
-const { setLobbies, addLobby } = lobbySlice.actions
+export const getLobbies = createAsyncThunk('lobbies/fetchLobbies',
+  () => fetchLobbies().then((data) => normalize(data.lobbies, [lobbySchema]).entities)
+)
 
-export const getLobbies = () => (dispatch) => fetchLobbies().then((data) => {
-  const players = []
-
-  const lobbies = data.lobbies.map(lobby => {
-    const { players: lobbyPlayers, ...lobbyData } = lobby
-    players.push(...lobbyPlayers)
-    return lobbyData
-  })
-
-  dispatch(setLobbies(lobbies))
-  dispatch(setPlayers(players))
-})
-export const getLobbyById = (id) => (dispatch) => fetchLobbyById(id).then((data) => {
-  const { players, ...lobby } = data
-  dispatch(addLobby(lobby))
-  dispatch(removePlayersFromLobby(lobby.id))
-  dispatch(addPlayers(players))
-})
+export const getLobbyById = createAsyncThunk('lobbies/fetchLobby',
+  (id) => fetchLobbyById(id).then((data) => normalize(data.lobbies, lobbySchema).entities)
+)

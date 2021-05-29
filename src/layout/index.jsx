@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components'
 import { Container } from 'react-bootstrap'
 import { Nav } from 'components/Nav'
-import { useUser } from 'hooks/useUser'
+import { useProfile } from 'hooks/useProfile'
 
 const LayoutWrapper = styled(Container)`
   width: 92%;
@@ -12,11 +12,11 @@ const LayoutWrapper = styled(Container)`
 `;
 
 export const Layout = ({ children }) => {
-  const { getCurrentUser, isLogged } = useUser()
+  const { getProfile, isLogged } = useProfile()
 
   useEffect(() => {
     if (isLogged) {
-      getCurrentUser()
+      getProfile()
     }
   }, [])
 

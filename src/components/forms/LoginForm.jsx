@@ -1,25 +1,25 @@
 import { useEffect, useState} from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { useUser } from 'hooks/useUser';
+import { useProfile } from 'hooks/useProfile';
 
 export const LoginForm = () => {
-  const { saveUser, userInfo, isLogged, updateUser } = useUser()
+  const { saveProfile, profileInfo, isLogged, updateProfile } = useProfile()
   const history = useHistory();
-  const [name, setName] = useState(userInfo.name || null)
+  const [name, setName] = useState(profileInfo.name || null)
   const [error, setError] = useState()
 
-  useEffect(() => setName(userInfo.name), [userInfo])
+  useEffect(() => setName(profileInfo.name), [profileInfo])
 
   const onSubmit = async (e) => {
     e.preventDefault()
 
     if (name && name.length > 3 && name.length < 30) {
 
-      if (isLogged && userInfo.name !== name) { // if user already has name and registered
-        await updateUser({ name })
+      if (isLogged && profileInfo.name !== name) { // if user already has name and registered
+        await updateProfile({ name })
       } else { // if its a new user
-        await saveUser(name)
+        await saveProfile(name)
       }
 
       history.push('/lobbies')

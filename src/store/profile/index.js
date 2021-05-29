@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const userToken = window.localStorage.getItem('token') || null
+const token = window.localStorage.getItem('token') || null
 
 const initialState = {
   info: {
@@ -8,21 +8,21 @@ const initialState = {
     name: null,
   },
   auth: {
-    token: userToken,
+    token: token,
   }
 }
 
-export const userSlice = createSlice({
-  name: 'user',
+export const profileSlice = createSlice({
+  name: 'profile',
   initialState,
   reducers: {
-    setUserInfo(state, { payload }) {
+    setInfo(state, { payload }) {
       state.info = payload
     },
-    setUserAuth(state, { payload }) {
+    setAuth(state, { payload }) {
       state.auth = payload
     },
-    resetUserState(state) {
+    reset(state) {
       state = { ...initialState }
     }
   },

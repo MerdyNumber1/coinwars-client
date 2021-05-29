@@ -1,7 +1,7 @@
 import { default as axiosClient } from 'axios'
-import { userAuthSelector } from 'store/user/selectors'
+import { profileAuthSelector } from 'store/profile/selectors'
 import { store } from 'store'
-import { logout } from 'store/user/actions';
+import { logout } from 'store/profile/actions';
 
 const { getState, dispatch } = store
 
@@ -28,7 +28,7 @@ axios.interceptors.response.use(
 
 axios.interceptors.request.use(
   (config) => {
-    const { token } = userAuthSelector(getState());
+    const { token } = profileAuthSelector(getState());
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -42,7 +42,7 @@ axios.interceptors.request.use(
 export const fetchLobbies = () => axios.get('lobbies?not_started=true').then(res => res.data)
 export const fetchLobbyById = (id) => axios.get(`lobbies/${id}`).then(res => res.data)
 
-export const postUser = (userData) => axios.post('players', userData).then(res => res.data)
-export const patchUser = (userData) => axios.patch('players/me', userData).then(res => res.data)
+export const postUser = (userData) => axios.post('users', userData).then(res => res.data)
+export const patchUser = (userData) => axios.patch('users/me', userData).then(res => res.data)
 
-export const fetchCurrentUser = () => axios.get('players/me').then(res => res.data)
+export const fetchCurrentUser = () => axios.get('users/me').then(res => res.data)
