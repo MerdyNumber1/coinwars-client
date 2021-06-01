@@ -1,4 +1,4 @@
-import { lobbiesAdapter } from './index';
+import { lobbiesAdapter } from './index'
 
 export const lobbiesSelectors = lobbiesAdapter.getSelectors(
   (state) => state.lobbies

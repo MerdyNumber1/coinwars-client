@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap'
 
 const LoadingFallbackWrapper = styled.div`
   width: 100%;

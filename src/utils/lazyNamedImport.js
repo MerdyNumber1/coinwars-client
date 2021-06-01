@@ -1,8 +1,7 @@
-import { lazy } from 'react';
+import { lazy } from 'react'
 
 export const lazyImport = (resolver, name = 'default') =>
   lazy(async () => {
-    const resolved = await resolver();
-    return { default: resolved[name] };
-  });
-
+    const resolved = await resolver()
+    return { default: resolved[name] }
+  })

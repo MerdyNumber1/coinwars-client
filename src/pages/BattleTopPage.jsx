@@ -1,10 +1,5 @@
-import React from 'react'
-import { useRouteMatch } from 'react-router-dom'
+import { BattleTopList } from 'components/battle/BattleTopList'
 
 export const BattleTopPage = () => {
-  const { url } = useRouteMatch()
-
-  console.log(url)
-
-  return <div>top stats</div>
+  return <BattleTopList />
 }

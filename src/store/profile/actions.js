@@ -1,19 +1,21 @@
-import { nanoid } from 'nanoid'
+import { nanoid } from '@reduxjs/toolkit'
 import { profileSlice } from './index'
 import { postUser, patchUser, fetchCurrentUser } from 'services/api'
 import { history } from 'routes'
 
 const { setInfo, setAuth, reset } = profileSlice.actions
 
-export const saveProfile = ({ name }) => async (dispatch) => {
-  const profileInfo = { name, token: nanoid(8) }
+export const saveProfile =
+  ({ name }) =>
+  async (dispatch) => {
+    const profileInfo = { name, token: nanoid(8) }
 
-  const profileData = await postUser(profileInfo)
+    const profileData = await postUser(profileInfo)
 
-  window.localStorage.setItem('token', profileInfo.token)
-  dispatch(setInfo(profileData))
-  dispatch(setAuth({ token: profileInfo.token }))
-}
+    window.localStorage.setItem('token', profileInfo.token)
+    dispatch(setInfo(profileData))
+    dispatch(setAuth({ token: profileInfo.token }))
+  }
 
 export const updateProfile = (profileData) => async (dispatch) => {
   const updateProfile = await patchUser(profileData)
@@ -26,6 +28,5 @@ export const logout = () => (dispatch) => {
   history.push('/')
 }
 
-export const getProfile = () => (dispatch) => (
-  fetchCurrentUser().then(profile => dispatch(setInfo(profile)))
-)
+export const getProfile = () => (dispatch) =>
+  fetchCurrentUser().then((profile) => dispatch(setInfo(profile)))

@@ -1,9 +1,9 @@
-import { Helmet } from 'react-helmet';
-import { LobbiesCard } from 'components/cards/LobbiesCard';
-import styled from 'styled-components';
-import { RefreshButton } from 'components/RefreshButton';
-import { useLobbies } from 'hooks/useLobbies';
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet'
+import { LobbiesCard } from 'components/cards/LobbiesCard'
+import styled from 'styled-components'
+import { RefreshButton } from 'components/RefreshButton'
+import { useLobbies } from 'hooks/useLobbies'
+import { useMount } from '@umijs/hooks'
 
 export const LobbiesPage = () => {
   const { selectLobbies, getLobbies } = useLobbies()
@@ -11,9 +11,9 @@ export const LobbiesPage = () => {
 
   const onLobbiesRefresh = () => getLobbies()
 
-  useEffect(() => {
+  useMount(() => {
     getLobbies()
-  }, [])
+  })
 
   return (
     <>
@@ -37,9 +37,9 @@ const LobbiesWrapper = styled.section`
   max-width: 400px;
   margin: 0 auto;
   align-items: center;
-`;
+`
 
 const RefreshWrapper = styled.div`
   width: 100%;
   margin-bottom: 10px;
-`;
+`

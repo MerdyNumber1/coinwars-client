@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { LoginForm } from 'components/forms/LoginForm';
-import { Helmet } from 'react-helmet';
+import styled from 'styled-components'
+import { LoginForm } from 'components/forms/LoginForm'
+import { Helmet } from 'react-helmet'
 
 export const MainPage = () => (
   <>
@@ -8,7 +8,9 @@ export const MainPage = () => (
       <title>Home</title>
     </Helmet>
     <MainPageWrapper>
-      <LoginFormWrapper><LoginForm /></LoginFormWrapper>
+      <LoginFormWrapper>
+        <LoginForm />
+      </LoginFormWrapper>
     </MainPageWrapper>
   </>
 )
@@ -18,8 +20,8 @@ const MainPageWrapper = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
 const LoginFormWrapper = styled.section`
   width: 100%;
-`;
+`

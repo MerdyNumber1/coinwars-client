@@ -1,9 +1,8 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { getLobbies, getLobbyById } from 'store/lobbies/actions'
+import { userAdapter } from '../users'
 
 export const playerAdapter = createEntityAdapter()
-
-export const localPlayersSelectors = playerAdapter.getSelectors(state => state)
 
 export const playersSlice = createSlice({
   name: 'players',
@@ -13,28 +12,15 @@ export const playersSlice = createSlice({
     addPlayer: playerAdapter.addOne,
     setPlayers: playerAdapter.setAll,
     removePlayer: playerAdapter.removeOne,
-    removePlayerByConnectionId(state, { payload }) {
-      localPlayersSelectors.selectAll(state).forEach((entity) => {
-        if (entity.connection_id === payload) {
-          playerAdapter.removeOne(state, entity.id)
-        }
-      })
-    },
-    removePlayersFromLobby(state, { payload }) {
-      localPlayersSelectors.selectAll(state).forEach((entity) => {
-        if (entity.lobby_id === payload) {
-          playerAdapter.removeOne(state, entity.id)
-        }
-      })
-    }
+    upsertPlayer: playerAdapter.upsertOne,
+    upsertPlayers: playerAdapter.upsertMany,
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getLobbies.fulfilled, (state, action) => {
-        playerAdapter.upsertMany(state, action.payload.players || {})
-      })
-      .addCase(getLobbyById.fulfilled, (state, action) => {
-        playerAdapter.upsertMany(state, action.payload.players || {})
-      })
-  }
+  extraReducers: {
+    [getLobbies.fulfilled]: (state, action) => {
+      userAdapter.setAll(state, action.payload.players || {})
+    },
+    [getLobbyById.fulfilled]: (state, action) => {
+      userAdapter.upsertMany(state, action.payload.players || {})
+    },
+  },
 })

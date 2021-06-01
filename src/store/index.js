@@ -9,10 +9,10 @@ const reducers = combineReducers({
   profile: profileSlice.reducer,
   lobbies: lobbySlice.reducer,
   players: playersSlice.reducer,
-  users: usersSlice.reducer
+  users: usersSlice.reducer,
 })
 
 export const store = configureStore({
   reducer: reducers,
   devTools: process.env.NODE_ENV !== 'production',
-});
+})

@@ -7,14 +7,16 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState: userAdapter.getInitialState(),
   reducers: {
+    upsertUsers: userAdapter.upsertMany,
     setUsers: userAdapter.setAll,
+    removeUser: userAdapter.removeOne,
   },
   extraReducers: {
     [getLobbies.fulfilled]: (state, action) => {
-      userAdapter.upsertMany(state, action.payload.users || {})
+      userAdapter.setAll(state, action.payload.users || {})
     },
     [getLobbyById.fulfilled]: (state, action) => {
       userAdapter.upsertMany(state, action.payload.users || {})
-    }
-  }
+    },
+  },
 })

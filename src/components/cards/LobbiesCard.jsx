@@ -5,7 +5,7 @@ import { LobbyCard } from './LobbyCard'
 export const LobbiesCard = ({ lobbies }) => (
   <CardWrapper>
     <ListGroup variant="flush">
-      {lobbies.map(lobby => (
+      {lobbies.map((lobby) => (
         <LobbyCard key={lobby.id} lobby={lobby} />
       ))}
     </ListGroup>
@@ -14,4 +14,4 @@ export const LobbiesCard = ({ lobbies }) => (
 
 const CardWrapper = styled(Card)`
   width: 100%;
-`;
+`

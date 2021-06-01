@@ -13,10 +13,10 @@ export const lobbySlice = createSlice({
   },
   extraReducers: {
     [getLobbies.fulfilled]: (state, action) => {
-      lobbiesAdapter.upsertMany(state, action.payload.lobbies || {})
+      lobbiesAdapter.setAll(state, action.payload.lobbies || {})
     },
     [getLobbyById.fulfilled]: (state, action) => {
       lobbiesAdapter.upsertMany(state, action.payload.lobbies || {})
-    }
-  }
+    },
+  },
 })

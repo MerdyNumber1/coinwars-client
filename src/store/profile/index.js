@@ -9,7 +9,7 @@ const initialState = {
   },
   auth: {
     token: token,
-  }
+  },
 }
 
 export const profileSlice = createSlice({
@@ -24,6 +24,6 @@ export const profileSlice = createSlice({
     },
     reset(state) {
       state = { ...initialState }
-    }
+    },
   },
 })

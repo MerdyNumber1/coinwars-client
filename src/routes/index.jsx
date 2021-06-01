@@ -21,7 +21,7 @@ export const Routes = () => {
     <Router history={history}>
       <Switch>
         <Layout>
-          <Suspense fallback={<LoadingFallback/>}>
+          <Suspense fallback={<LoadingFallback />}>
             <Route path="/" component={MainPage} exact />
             {isLogged && (
               <>
