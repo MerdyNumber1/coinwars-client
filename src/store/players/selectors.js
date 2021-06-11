@@ -5,9 +5,6 @@ import { localUsersSelectors, usersSelector } from 'store/users/selectors'
 
 export const playersSelector = (state) => state.players
 export const playersSelectors = playerAdapter.getSelectors(playersSelector)
-export const localPlayersSelectors = playerAdapter.getSelectors(
-  (state) => state
-)
 
 export const playersByLobbyIdSelector = (lobbyId) =>
   createSelector(playersSelectors.selectAll, (players) =>

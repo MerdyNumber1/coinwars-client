@@ -1,8 +1,10 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { getLobbies, getLobbyById } from 'store/lobbies/actions'
-import { userAdapter } from '../users'
+import { userAdapter } from 'store/users'
 
 export const playerAdapter = createEntityAdapter()
+
+const localPlayersSelectors = playerAdapter.getSelectors((state) => state)
 
 export const playersSlice = createSlice({
   name: 'players',
@@ -14,6 +16,18 @@ export const playersSlice = createSlice({
     removePlayer: playerAdapter.removeOne,
     upsertPlayer: playerAdapter.upsertOne,
     upsertPlayers: playerAdapter.upsertMany,
+    updatePlayersResources(state) {
+      localPlayersSelectors.selectAll(state).forEach((player) => {
+        playerAdapter.updateOne(state, {
+          id: player.id,
+          changes: {
+            coins: player.coins + player.coins_increase,
+            army: player.coins + player.army_increase,
+            territories: player.coins + player.territories_increase,
+          },
+        })
+      })
+    },
   },
   extraReducers: {
     [getLobbies.fulfilled]: (state, action) => {

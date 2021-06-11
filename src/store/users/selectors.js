@@ -19,6 +19,16 @@ export const usersByLobbyIdSelector = (lobbyId) =>
       )
   )
 
+export const usersEntitiesByLobbyIdSelector = (lobbyId) =>
+  createSelector(
+    playersByLobbyIdSelector(lobbyId),
+    usersSelector,
+    (players, state) =>
+      players.map((player) => ({
+        [player.user]: localUsersSelectors.selectById(state, player.user),
+      }))
+  )
+
 export const currentUserSelector = createSelector(
   profileInfoSelector,
   usersSelector,

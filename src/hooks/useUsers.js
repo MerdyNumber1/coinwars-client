@@ -4,6 +4,7 @@ import {
   usersSelectors,
   usersByLobbyIdSelector,
   currentUserSelector,
+  usersEntitiesByLobbyIdSelector,
 } from 'store/users/selectors'
 
 const { upsertUsers, removeUser } = usersSlice.actions
@@ -18,6 +19,8 @@ export const useUsers = () => {
       useSelector((state) => usersSelectors.selectById(state, userId)),
     selectUsersByLobbyId: (lobbyId) =>
       useSelector(usersByLobbyIdSelector(lobbyId)),
+    selectUsersEntitiesByLobbyId: (lobbyId) =>
+      useSelector(usersEntitiesByLobbyIdSelector(lobbyId)),
     currentUser: useSelector(currentUserSelector),
   }
 }

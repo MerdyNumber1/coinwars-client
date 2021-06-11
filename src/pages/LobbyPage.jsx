@@ -1,10 +1,9 @@
-import { useState, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useLobbies } from 'hooks/useLobbies'
 import { useParams } from 'react-router-dom'
 import { LoadingFallback } from 'components/LoadingFallback'
 import { UserCard } from 'components/cards/UserCard'
-import { useSocket } from 'hooks/useSocket'
 import { useProfile } from 'hooks/useProfile'
 import { usePlayers } from 'hooks/usePlayers'
 import { useHistory } from 'react-router-dom'
@@ -13,6 +12,7 @@ import { playerSchema } from 'store/players/schema'
 import { normalize } from 'normalizr'
 import { useUsers } from 'hooks/useUsers'
 import { useUnmount, useMount, useCounter } from '@umijs/hooks'
+import { lobbySocket } from 'services/socket'
 
 export const LobbyPage = () => {
   const [countdownIntervalId, setCountdownIntervalId] = useState()
@@ -26,55 +26,62 @@ export const LobbyPage = () => {
   const { upsertUsers, selectUsersByLobbyId, removeUserById, currentUser } =
     useUsers()
 
-  const { onEvent, disconnect } = useSocket('lobbies', {
-    lobby_id: lobbyId,
-    token: profileAuth.token,
-  })
+  const onPlayerConnect = (player) => {
+    const data = normalize(JSON.parse(player), playerSchema).entities
+    upsertUsers(data.users || {})
+    upsertPlayers(data.players || {})
+  }
+
+  const onPlayerDisconnect = (data) => {
+    const player = JSON.parse(data)
+    removePlayerById(player.id)
+    removeUserById(player.user)
+  }
+
+  const onCountdownStart = (seconds) => {
+    setCountdown(seconds)
+    const intervalId = setInterval(decrementCountdown, 1000)
+    setCountdownIntervalId(intervalId)
+  }
+
+  const onCountdownEnd = () => {
+    clearInterval(countdownIntervalId)
+    setCountdown(1)
+    history.push(`/battles/${lobbyId}`)
+  }
+
+  const onCountdownInterrupted = () => {
+    clearInterval(countdownIntervalId)
+    setCountdown(10)
+  }
 
   useMount(() => {
     getLobbyById(lobbyId)
+    lobbySocket.connect({
+      lobby_id: lobbyId,
+      token: profileAuth.token,
+    })
+
+    lobbySocket.onEvent('player_connect', onPlayerConnect)
+    lobbySocket.onEvent('player_disconnect', onPlayerDisconnect)
+    lobbySocket.onEvent('countdown_start', onCountdownStart)
+    lobbySocket.onEvent('countdown_end', onCountdownEnd)
   })
+
+  useEffect(
+    () =>
+      lobbySocket.replaceListener(
+        'countdown_interrupted',
+        onCountdownInterrupted
+      ),
+    [countdownIntervalId]
+  )
 
   useUnmount(() => {
     removePlayerById(currentPlayer.id)
     removeUserById(currentUser.id)
-    disconnect()
+    lobbySocket.disconnect()
   })
-
-  const onPlayerConnect = useCallback((player) => {
-    const data = normalize(JSON.parse(player), playerSchema).entities
-    upsertUsers(data.users || {})
-    upsertPlayers(data.players || {})
-  }, [])
-
-  const onPlayerDisconnect = useCallback((data) => {
-    const player = JSON.parse(data).id
-    removePlayerById(player.id)
-    removeUserById(player.user)
-  }, [])
-
-  const onCountdownStart = useCallback((seconds) => {
-    setCountdown(seconds)
-    const intervalId = setInterval(decrementCountdown, 1000)
-    setCountdownIntervalId(intervalId)
-  }, [])
-
-  const onCountdownEnd = useCallback(() => {
-    clearInterval(countdownIntervalId)
-    setCountdown(1)
-    history.push(`/battles/${lobbyId}`)
-  }, [countdownIntervalId])
-
-  const onCountdownInterrupted = useCallback(() => {
-    clearInterval(countdownIntervalId)
-    setCountdown(null)
-  }, [countdownIntervalId])
-
-  onEvent('player_connect', onPlayerConnect)
-  onEvent('player_disconnect', onPlayerDisconnect)
-  onEvent('countdown_start', onCountdownStart)
-  onEvent('countdown_end', onCountdownEnd)
-  onEvent('countdown_interrupted', onCountdownInterrupted)
 
   const users = selectUsersByLobbyId(Number(lobbyId))
   const lobby = selectLobbyById(lobbyId)
