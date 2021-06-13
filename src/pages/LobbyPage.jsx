@@ -22,9 +22,8 @@ export const LobbyPage = () => {
   const { profileAuth } = useProfile()
   const { lobbyId } = useParams()
   const { selectLobbyById, getLobbyById } = useLobbies()
-  const { removePlayerById, upsertPlayers, currentPlayer } = usePlayers()
-  const { upsertUsers, selectUsersByLobbyId, removeUserById, currentUser } =
-    useUsers()
+  const { removePlayerById, upsertPlayers } = usePlayers()
+  const { upsertUsers, selectUsersByLobbyId, removeUserById } = useUsers()
 
   const onPlayerConnect = (player) => {
     const data = normalize(JSON.parse(player), playerSchema).entities
@@ -55,8 +54,8 @@ export const LobbyPage = () => {
     setCountdown(10)
   }
 
-  useMount(() => {
-    getLobbyById(lobbyId)
+  useMount(async () => {
+    await getLobbyById(lobbyId)
     lobbySocket.connect({
       lobby_id: lobbyId,
       token: profileAuth.token,
@@ -78,9 +77,7 @@ export const LobbyPage = () => {
   )
 
   useUnmount(() => {
-    removePlayerById(currentPlayer.id)
-    removeUserById(currentUser.id)
-    lobbySocket.disconnect()
+    clearInterval(countdownIntervalId)
   })
 
   const users = selectUsersByLobbyId(Number(lobbyId))

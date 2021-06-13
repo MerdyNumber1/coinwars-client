@@ -3,7 +3,6 @@ import { useUsers } from 'hooks/useUsers'
 
 export const BattleTopItem = ({ player, resource, index }) => {
   const { selectUserById } = useUsers()
-
   const user = selectUserById(player.user)
 
   return (

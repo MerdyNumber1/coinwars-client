@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
-import { useProfile } from 'hooks/useProfile'
 import { useParams } from 'react-router-dom'
 import { lazyImport } from 'utils/lazyNamedImport'
 import { Tab, Tabs } from 'react-bootstrap'
 import { usePlayers } from 'hooks/usePlayers'
 import { useLobbies } from 'hooks/useLobbies'
-import { battleSocket } from 'services/socket'
+import { lobbySocket } from 'services/socket'
 import { normalize } from 'normalizr'
 import { playerSchema } from 'store/players/schema'
+import { useUnmount } from '@umijs/hooks'
+import { useUsers } from 'hooks/useUsers'
 
 const BattleDashboardPage = lazyImport(
   () => import('pages/BattleDashboardPage'),
@@ -20,26 +21,44 @@ const BattleTopPage = lazyImport(
 
 export const BattlePage = () => {
   const { lobbyId } = useParams()
-  const { profileAuth } = useProfile()
-  const { updatePlayersResources, upsertPlayers } = usePlayers()
+  const {
+    updatePlayersResources,
+    upsertPlayers,
+    removePlayerById,
+    currentPlayer,
+  } = usePlayers()
   const { getLobbyById } = useLobbies()
+  const { removeUserById, currentUser } = useUsers()
 
   const onPlayerUpdate = (player) => {
+    console.log(JSON.parse(player))
     const data = normalize(JSON.parse(player), playerSchema).entities
     upsertPlayers(data.players)
   }
 
+  const onPlayerDisconnect = (data) => {
+    const player = JSON.parse(data)
+    removePlayerById(player.id)
+    removeUserById(player.user)
+  }
+
+  useUnmount(() => {
+    removePlayerById(currentPlayer.id)
+    removeUserById(currentUser.id)
+    lobbySocket.disconnect()
+  })
+
   useEffect(() => {
-    battleSocket.connect({
-      lobby_id: lobbyId,
-      token: profileAuth.token,
+    getLobbyById(lobbyId).then(() => {
+      lobbySocket.onEvent('player_update', onPlayerUpdate)
+      lobbySocket.onEvent('player_disconnect', onPlayerDisconnect)
     })
-    battleSocket.onEvent('player_update', onPlayerUpdate)
 
-    getLobbyById(lobbyId)
-    const interval = setInterval(() => updatePlayersResources(), 1000)
+    const interval = setInterval(updatePlayersResources, 1000)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+    }
   }, [])
 
   return (

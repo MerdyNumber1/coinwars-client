@@ -6,17 +6,19 @@ export class Socket {
 
   constructor(namespace, query) {
     this.namespace = namespace
-  }
-
-  connect(query) {
     this.connection = io(
       `${process.env.REACT_APP_SOCKET_URL}/${this.namespace}`,
       {
         transports: ['websocket', 'polling', 'flashsocket'],
         reconnectionDelayMax: 10000,
-        query,
+        autoConnect: false,
       }
     )
+  }
+
+  connect(query) {
+    this.connection.io.opts.query = query
+    this.connection.connect()
   }
 
   onConnect(cb) {
@@ -46,4 +48,3 @@ export class Socket {
 }
 
 export const lobbySocket = new Socket('lobbies')
-export const battleSocket = new Socket('battles')

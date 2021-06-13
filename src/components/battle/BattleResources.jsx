@@ -1,12 +1,11 @@
 import React from 'react'
 import { ListGroup, Button } from 'react-bootstrap'
-import { battleSocket } from 'services/socket'
+import { lobbySocket } from 'services/socket'
 
 export const BattleResources = ({ player }) => {
-  const onArmyUpgrade = () =>
-    battleSocket.emit('player_upgrade', { army: true })
+  const onArmyUpgrade = () => lobbySocket.emit('player_upgrade', { army: true })
   const onCoinsUpgrade = () =>
-    battleSocket.emit('player_upgrade', { coins: true })
+    lobbySocket.emit('player_upgrade', { coins: true })
 
   return (
     <div>
