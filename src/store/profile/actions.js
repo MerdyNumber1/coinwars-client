@@ -1,9 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit'
-import { profileSlice } from './index'
+import { setInfo, setAuth, reset } from './index'
 import { postUser, patchUser, fetchCurrentUser } from 'services/api'
 import { history } from 'routes'
-
-const { setInfo, setAuth, reset } = profileSlice.actions
 
 export const saveProfile =
   ({ name }) =>

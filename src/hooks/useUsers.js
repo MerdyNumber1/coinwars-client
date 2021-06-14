@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { usersSlice } from 'store/users'
+import { upsertUsers, removeUser } from 'store/users'
 import {
   usersSelectors,
   usersByLobbyIdSelector,
   currentUserSelector,
   usersEntitiesByLobbyIdSelector,
 } from 'store/users/selectors'
-
-const { upsertUsers, removeUser } = usersSlice.actions
 
 export const useUsers = () => {
   const dispatch = useDispatch()

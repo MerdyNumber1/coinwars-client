@@ -1,19 +1,19 @@
 import { combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
-import { profileSlice } from 'store/profile'
-import { lobbySlice } from 'store/lobbies'
-import { playersSlice } from 'store/players'
-import { usersSlice } from 'store/users'
+import { reducer as profileReducer } from 'store/profile'
+import { reducer as lobbyReducer } from 'store/lobbies'
+import { reducer as playersReducer } from 'store/players'
+import { reducer as usersReducer } from 'store/users'
 import { rootSaga } from 'store/rootSaga'
 
 const sagaMiddleware = createSagaMiddleware()
 
 const reducers = combineReducers({
-  profile: profileSlice.reducer,
-  lobbies: lobbySlice.reducer,
-  players: playersSlice.reducer,
-  users: usersSlice.reducer,
+  profile: profileReducer,
+  lobbies: lobbyReducer,
+  players: playersReducer,
+  users: usersReducer,
 })
 
 export const store = configureStore({

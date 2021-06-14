@@ -3,7 +3,7 @@ import { getLobbies, getLobbyById } from './actions'
 
 export const lobbiesAdapter = createEntityAdapter()
 
-export const lobbySlice = createSlice({
+const lobbiesSlice = createSlice({
   name: 'lobbies',
   initialState: lobbiesAdapter.getInitialState(),
   reducers: {
@@ -20,3 +20,6 @@ export const lobbySlice = createSlice({
     },
   },
 })
+
+export const { actions, reducer } = lobbiesSlice
+export const { setLobbies, addLobbies, addLobby } = actions

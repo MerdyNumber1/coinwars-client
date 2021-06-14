@@ -3,16 +3,18 @@ import {
   playersByLobbyIdSelector,
   currentPlayerSelector,
 } from 'store/players/selectors'
-import { playersSlice } from 'store/players'
-
-const {
+import {
   addPlayer,
   addPlayers,
   removePlayer,
   upsertPlayer,
   upsertPlayers,
   updatePlayersResources,
-} = playersSlice.actions
+} from 'store/players'
+import {
+  playerCoinsUpgradeAction,
+  playerArmyUpgradeAction,
+} from 'store/players/actions'
 
 export const usePlayers = () => {
   const dispatch = useDispatch()
@@ -24,6 +26,8 @@ export const usePlayers = () => {
     addPlayers: (players) => dispatch(addPlayers(players)),
     removePlayerById: (id) => dispatch(removePlayer(id)),
     updatePlayersResources: () => dispatch(updatePlayersResources()),
+    upgradeArmy: () => dispatch(playerArmyUpgradeAction()),
+    upgradeCoins: () => dispatch(playerCoinsUpgradeAction()),
     selectPlayersByLobbyId: (lobbyId) =>
       useSelector(playersByLobbyIdSelector(lobbyId)),
     currentPlayer: useSelector(currentPlayerSelector),

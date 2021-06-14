@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit'
+import { profileSelector } from './index'
 
-export const profileState = (state) => state.profile
 export const profileInfoSelector = createSelector(
-  profileState,
+  profileSelector,
   (state) => state.info
 )
 export const profileAuthSelector = createSelector(
-  profileState,
+  profileSelector,
   (state) => state.auth
 )
 export const isLoggedSelector = createSelector(

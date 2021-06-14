@@ -1,9 +1,11 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { getLobbies, getLobbyById } from 'store/lobbies/actions'
 
+export const usersSelector = (state) => state.users
+
 export const userAdapter = createEntityAdapter()
 
-export const usersSlice = createSlice({
+const usersSlice = createSlice({
   name: 'users',
   initialState: userAdapter.getInitialState(),
   reducers: {
@@ -20,3 +22,6 @@ export const usersSlice = createSlice({
     },
   },
 })
+
+export const { actions, reducer } = usersSlice
+export const { upsertUsers, setUsers, removeUser } = actions

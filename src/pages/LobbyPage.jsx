@@ -30,7 +30,6 @@ export const LobbyPage = () => {
 
   const onCountdownEnd = () => {
     clearInterval(countdownIntervalId)
-    setCountdown(1)
     history.push(`/battles/${lobbyId}`)
   }
 

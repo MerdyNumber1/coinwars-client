@@ -2,8 +2,7 @@ import { userAdapter } from './index'
 import { createSelector } from '@reduxjs/toolkit'
 import { playersByLobbyIdSelector } from 'store/players/selectors'
 import { profileInfoSelector } from 'store/profile/selectors'
-
-export const usersSelector = (state) => state.users
+import { usersSelector } from './index'
 
 export const usersSelectors = userAdapter.getSelectors(usersSelector)
 

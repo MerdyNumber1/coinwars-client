@@ -6,7 +6,7 @@ export const playerAdapter = createEntityAdapter()
 
 const localPlayersSelectors = playerAdapter.getSelectors((state) => state)
 
-export const playersSlice = createSlice({
+const playersSlice = createSlice({
   name: 'players',
   initialState: playerAdapter.getInitialState(),
   reducers: {
@@ -17,7 +17,6 @@ export const playersSlice = createSlice({
     upsertPlayer: playerAdapter.upsertOne,
     upsertPlayers: playerAdapter.upsertMany,
     updatePlayersResources(state) {
-      console.log(state)
       localPlayersSelectors.selectAll(state).forEach((player) => {
         playerAdapter.updateOne(state, {
           id: player.id,
@@ -39,3 +38,14 @@ export const playersSlice = createSlice({
     },
   },
 })
+
+export const { actions, reducer } = playersSlice
+export const {
+  addPlayers,
+  addPlayer,
+  setPlayers,
+  removePlayer,
+  upsertPlayer,
+  upsertPlayers,
+  updatePlayersResources,
+} = actions

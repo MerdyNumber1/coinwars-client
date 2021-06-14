@@ -31,15 +31,8 @@ export const BattlePage = () => {
   const { removeUserById, currentUser } = useUsers()
 
   const onPlayerUpdate = (player) => {
-    console.log(JSON.parse(player))
     const data = normalize(JSON.parse(player), playerSchema).entities
     upsertPlayers(data.players)
-  }
-
-  const onPlayerDisconnect = (data) => {
-    const player = JSON.parse(data)
-    removePlayerById(player.id)
-    removeUserById(player.user)
   }
 
   useUnmount(() => {
@@ -51,7 +44,6 @@ export const BattlePage = () => {
   useEffect(() => {
     getLobbyById(lobbyId).then(() => {
       lobbySocket.onEvent('player_update', onPlayerUpdate)
-      lobbySocket.onEvent('player_disconnect', onPlayerDisconnect)
     })
 
     const interval = setInterval(updatePlayersResources, 1000)

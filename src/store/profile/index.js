@@ -12,7 +12,9 @@ const initialState = {
   },
 }
 
-export const profileSlice = createSlice({
+export const profileSelector = (state) => state.profile
+
+const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
@@ -27,3 +29,6 @@ export const profileSlice = createSlice({
     },
   },
 })
+
+export const { actions, reducer } = profileSlice
+export const { setInfo, setAuth, reset } = actions
