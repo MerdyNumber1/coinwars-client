@@ -17,6 +17,7 @@ export const playersSlice = createSlice({
     upsertPlayer: playerAdapter.upsertOne,
     upsertPlayers: playerAdapter.upsertMany,
     updatePlayersResources(state) {
+      console.log(state)
       localPlayersSelectors.selectAll(state).forEach((player) => {
         playerAdapter.updateOne(state, {
           id: player.id,

@@ -12,14 +12,14 @@ export const BattleResources = ({ player }) => {
       <h3 className="mt-3 mb-3">Your resources:</h3>
       <ListGroup>
         <ListGroup.Item>
+          Army: {player.army} (+{player.army_increase} per second)
+        </ListGroup.Item>
+        <ListGroup.Item>
           Coins: {player.coins} (+{player.coins_increase} per second)
         </ListGroup.Item>
         <ListGroup.Item>
           Territory: {player.territories} (+{player.territories_increase} per
           second)
-        </ListGroup.Item>
-        <ListGroup.Item>
-          Army: {player.army} (+{player.army_increase} per second)
         </ListGroup.Item>
       </ListGroup>
       <div className="mt-3 mb-3">

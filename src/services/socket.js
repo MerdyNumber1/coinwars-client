@@ -1,11 +1,16 @@
 import { io } from 'socket.io-client'
+import { eventChannel } from 'redux-saga'
+import { lobbyEvents } from './socketEvents'
 
 export class Socket {
   connection
   namespace
+  events
+  eventsChannels
 
-  constructor(namespace, query) {
+  constructor(namespace, events) {
     this.namespace = namespace
+    this.events = events
     this.connection = io(
       `${process.env.REACT_APP_SOCKET_URL}/${this.namespace}`,
       {
@@ -45,6 +50,16 @@ export class Socket {
   disconnect() {
     this.connection.disconnect()
   }
+
+  createEventChannel(eventName) {
+    const subscribe = (emitter) => {
+      this.connection.on(eventName, emitter)
+
+      return () => this.connection.removeListener(eventName, emitter)
+    }
+
+    return eventChannel(subscribe)
+  }
 }
 
-export const lobbySocket = new Socket('lobbies')
+export const lobbySocket = new Socket('lobbies', lobbyEvents)
