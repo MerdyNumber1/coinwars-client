@@ -22,8 +22,8 @@ const playersSlice = createSlice({
           id: player.id,
           changes: {
             coins: player.coins + player.coins_increase,
-            army: player.coins + player.army_increase,
-            territories: player.coins + player.territories_increase,
+            army: player.army + player.army_increase,
+            territories: player.territories + player.territories_increase,
           },
         })
       })

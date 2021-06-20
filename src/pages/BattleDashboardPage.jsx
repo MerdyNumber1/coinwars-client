@@ -6,8 +6,6 @@ import { LoadingFallback } from 'components/LoadingFallback'
 export const BattleDashboardPage = () => {
   const { currentPlayer } = usePlayers()
 
-  console.log(currentPlayer)
-
   return (
     <section>
       {currentPlayer ? (

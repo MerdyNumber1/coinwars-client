@@ -16,7 +16,6 @@ function* lobbyPlayerConnect(data) {
 
 function* lobbyPlayerUpdate(data) {
   const entities = normalize(JSON.parse(data), playerSchema).entities
-  console.log(entities)
   yield put(upsertPlayers(entities.players))
 }
 

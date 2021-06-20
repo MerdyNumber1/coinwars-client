@@ -9,17 +9,17 @@ export const BattleTopPage = ({ lobbyId }) => {
   const players = selectPlayersByLobbyId(Number(lobbyId))
 
   const playersByTerritories = useMemo(
-    () => players.sort((a, b) => a.territories - b.territories),
+    () => players.sort((a, b) => b.territories - a.territories),
     [players]
   )
 
   const playersByCoins = useMemo(
-    () => players.sort((a, b) => a.coins - b.coins),
+    () => players.sort((a, b) => b.coins - a.coins),
     [players]
   )
 
   const playersByArmy = useMemo(
-    () => players.sort((a, b) => a.army - b.army),
+    () => players.sort((a, b) => b.army - a.army),
     [players]
   )
 

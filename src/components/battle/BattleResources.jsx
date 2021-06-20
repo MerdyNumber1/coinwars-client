@@ -27,14 +27,14 @@ export const BattleResources = ({ player }) => {
           variant="primary"
           onClick={onArmyUpgrade}
         >
-          Upgrade the army
+          Upgrade the army ({player.army_upgrade_cost_in_coins} coins)
         </Button>
         <Button
           className="w-100 mb-2"
           variant="primary"
           onClick={onCoinsUpgrade}
         >
-          Upgrade coin mining
+          Upgrade coin mining ({player.coins_upgrade_cost_in_coins} coins)
         </Button>
       </div>
     </div>

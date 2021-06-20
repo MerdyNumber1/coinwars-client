@@ -7,6 +7,7 @@ import {
 import {
   watchPlayerArmyUpgrade,
   watchPlayerCoinsUpgrade,
+  watchPlayerAttack,
 } from 'store/players/sagas'
 
 export function* rootSaga() {
@@ -16,5 +17,6 @@ export function* rootSaga() {
     watchLobbyPlayerUpdate(),
     watchPlayerArmyUpgrade(),
     watchPlayerCoinsUpgrade(),
+    watchPlayerAttack(),
   ])
 }

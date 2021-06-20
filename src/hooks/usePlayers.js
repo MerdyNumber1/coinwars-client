@@ -14,6 +14,7 @@ import {
 import {
   playerCoinsUpgradeAction,
   playerArmyUpgradeAction,
+  playerAttackAction,
 } from 'store/players/actions'
 
 export const usePlayers = () => {
@@ -28,6 +29,7 @@ export const usePlayers = () => {
     updatePlayersResources: () => dispatch(updatePlayersResources()),
     upgradeArmy: () => dispatch(playerArmyUpgradeAction()),
     upgradeCoins: () => dispatch(playerCoinsUpgradeAction()),
+    attackPlayer: (targetId) => dispatch(playerAttackAction({ targetId })),
     selectPlayersByLobbyId: (lobbyId) =>
       useSelector(playersByLobbyIdSelector(lobbyId)),
     currentPlayer: useSelector(currentPlayerSelector),

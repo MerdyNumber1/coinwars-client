@@ -9,6 +9,9 @@ import { normalize } from 'normalizr'
 import { playerSchema } from 'store/players/schema'
 import { useUnmount } from '@umijs/hooks'
 import { useUsers } from 'hooks/useUsers'
+import { Helmet } from 'react-helmet'
+import { PlayerWonModal } from 'components/modals/PlayerWonModal'
+import { PlayerLostModal } from 'components/modals/PlayerLostModal'
 
 const BattleDashboardPage = lazyImport(
   () => import('pages/BattleDashboardPage'),
@@ -54,13 +57,22 @@ export const BattlePage = () => {
   }, [])
 
   return (
-    <Tabs defaultActiveKey="dashboard">
-      <Tab eventKey="dashboard" title="Dashboard">
-        <BattleDashboardPage />
-      </Tab>
-      <Tab eventKey="top" title="Top">
-        <BattleTopPage lobbyId={lobbyId} />
-      </Tab>
-    </Tabs>
+    <>
+      <Helmet>
+        <title>Battle</title>
+      </Helmet>
+      <>
+        {currentPlayer?.won && <PlayerWonModal />}
+        {currentPlayer?.lost && <PlayerLostModal />}
+        <Tabs defaultActiveKey="dashboard">
+          <Tab eventKey="dashboard" title="Dashboard">
+            <BattleDashboardPage />
+          </Tab>
+          <Tab eventKey="top" title="Top">
+            <BattleTopPage lobbyId={lobbyId} />
+          </Tab>
+        </Tabs>
+      </>
+    </>
   )
 }
