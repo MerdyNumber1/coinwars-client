@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap'
 import { history } from 'routes'
 
 export const PlayerLostModal = () => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(true)
 
   const handleClose = () => {
     setShow(false)

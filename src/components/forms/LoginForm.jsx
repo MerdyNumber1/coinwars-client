@@ -18,7 +18,7 @@ export const LoginForm = () => {
       if (isLogged && profileInfo.name !== name) {
         // if user already has name and registered
         await updateProfile({ name })
-      } else {
+      } else if (!isLogged) {
         // if its a new user
         await saveProfile(name)
       }

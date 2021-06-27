@@ -16,11 +16,13 @@ function* lobbyPlayerConnect(data) {
 
 function* lobbyPlayerUpdate(data) {
   const entities = normalize(JSON.parse(data), playerSchema).entities
+  console.log(entities.players)
   yield put(upsertPlayers(entities.players))
 }
 
 function* lobbyPlayerDisconnect(data) {
   const player = JSON.parse(data)
+  console.log(player)
   yield put(removePlayer(player.id))
   yield put(removeUser(player.user))
 }

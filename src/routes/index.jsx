@@ -8,9 +8,12 @@ import { createBrowserHistory } from 'history'
 
 const MainPage = lazyImport(() => import('pages/MainPage'), 'MainPage')
 const LobbiesPage = lazyImport(() => import('pages/LobbiesPage'), 'LobbiesPage')
-const LobbyPage = lazyImport(() => import('pages/LobbyPage'), 'LobbyPage')
 const HelpPage = lazyImport(() => import('pages/HelpPage'), 'HelpPage')
-const BattlePage = lazyImport(() => import('pages/BattlePage'), 'BattlePage')
+
+const LobbyContainer = lazyImport(
+  () => import('containers/LobbyContainer'),
+  'LobbyContainer'
+)
 
 export const history = createBrowserHistory()
 
@@ -26,9 +29,8 @@ export const Routes = () => {
             {isLogged && (
               <>
                 <Route path="/lobbies" component={LobbiesPage} exact />
-                <Route path="/lobbies/:lobbyId" component={LobbyPage} />
+                <Route path="/lobbies/:lobbyId" component={LobbyContainer} />
                 <Route path="/help" component={HelpPage} />
-                <Route path="/battles/:lobbyId" component={BattlePage} />
               </>
             )}
           </Suspense>

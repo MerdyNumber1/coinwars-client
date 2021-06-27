@@ -56,6 +56,8 @@ export const BattlePage = () => {
     }
   }, [])
 
+  console.log(currentPlayer)
+
   return (
     <>
       <Helmet>
