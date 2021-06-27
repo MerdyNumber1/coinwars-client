@@ -21,6 +21,10 @@ const BattleTopPage = lazyImport(
   () => import('pages/BattleTopPage'),
   'BattleTopPage'
 )
+const BattleChatPage = lazyImport(
+  () => import('pages/BattleChatPage'),
+  'BattleChatPage'
+)
 
 export const BattlePage = () => {
   const { lobbyId } = useParams()
@@ -72,6 +76,9 @@ export const BattlePage = () => {
           </Tab>
           <Tab eventKey="top" title="Top">
             <BattleTopPage lobbyId={lobbyId} />
+          </Tab>
+          <Tab eventKey="chat" title="Chat">
+            <BattleChatPage />
           </Tab>
         </Tabs>
       </>
